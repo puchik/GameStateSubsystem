@@ -28,19 +28,19 @@ void AExtendableGameStateBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	for(UGameStateSubsystem* Subsystem : GetSubsystemArray<UGameStateSubsystem>())
+	SubsystemCollection.ForEachSubsystem([this](UGameStateSubsystem* Subsystem)
 	{
 		AddReplicatedSubObject(Subsystem);
 		Subsystem->BeginPlay();
-	}
+	}, UGameStateSubsystem::StaticClass());
 }
 
 void AExtendableGameStateBase::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-	for(UGameStateSubsystem* Subsystem : GetSubsystemArray<UGameStateSubsystem>())
+	SubsystemCollection.ForEachSubsystem([this](UGameStateSubsystem* Subsystem)
 	{
 		RemoveReplicatedSubObject(Subsystem);
-	}
+	}, UGameStateSubsystem::StaticClass());
 	
 	SubsystemCollection.Deinitialize();
 	

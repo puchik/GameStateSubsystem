@@ -57,17 +57,6 @@ public:
 		return nullptr;
 	}
 
-	/**
-	 * Get all Subsystem of specified type, this is only necessary for interfaces that can have multiple implementations instanced at a time.
-	 *
-	 * Do not hold onto this Array reference unless you are sure the lifetime is less than that of AExtendableGameStateBase
-	 */
-	template <typename TSubsystemClass>
-	const TArray<TSubsystemClass*>& GetSubsystemArray() const
-	{
-		return SubsystemCollection.GetSubsystemArray<TSubsystemClass>(TSubsystemClass::StaticClass());
-	}
-
 private:
 
 	FObjectSubsystemCollection<UGameStateSubsystem> SubsystemCollection;
